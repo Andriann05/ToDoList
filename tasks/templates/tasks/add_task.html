@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+
+        <!-- Colonne du formulaire -->
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4 border-0 rounded-3">
+                <div class="card-body">
+                    <h2 class="mb-4 text-center text-primary">
+                        <i class="bi bi-plus-circle"></i> Ajouter une tâche
+                    </h2>
+
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ field.label }}</label>
+                            
+                            <div class="input-group">
+                                {% if field.name == "title" %}
+                                    <span class="input-group-text"><i class="bi bi-pencil"></i></span>
+                                {% elif field.name == "due_date" %}
+                                    <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                {% elif field.name == "priority" %}
+                                    <span class="input-group-text"><i class="bi bi-exclamation-triangle"></i></span>
+                                {% else %}
+                                    <span class="input-group-text"><i class="bi bi-input-cursor"></i></span>
+                                {% endif %}
+
+                                {{ field }}
+                            </div>
+
+                            {% if field.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ field.errors|striptags }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                        <div class="d-flex justify-content-between gap-3">
+                            <a href="{% url 'task_list' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Retour
+                            </a>
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-save"></i> Enregistrer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Colonne de l'image -->
+        <div class="col-md-6 text-center d-none d-md-block">
+            <img src="/media/homepage.svg" alt="Illustration"
+                class="img-fluid rounded-3 shadow" style="height: 745px;">
+        </div>
+    </div>
+</div>
+{% endblock %}

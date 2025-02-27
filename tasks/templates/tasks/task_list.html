@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if urgent_tasks %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>⚠ Alerte !</strong> Vous avez des tâches urgentes à faire :
+        <ul>
+            {% for task in urgent_important %}
+                <li>{{ task.title }}</li>
+            {% endfor %}
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4"><i class="bi bi-list-check"></i> Matrice d’Eisenhower</h2>
+
+    <div class="row">
+        <!-- Quadrant 1: Urgent & Important -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-danger shadow " style="min-height: 250px;">
+                <div class="card-header bg-danger text-white">
+                    <strong>📌 Urgent & Important (À faire immédiatement)</strong>
+                </div>
+                <div class="card-body">
+                    {% if urgent_important %}
+                        <ul class="list-group">
+                            {% for task in urgent_important %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>
+                                        {{ task.title }}
+                                        {% if task.completed %}
+                                            <span class="badge bg-success">✔ Terminé</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">🔥 Urgent</span>
+                                        {% endif %}
+                                    </span>
+                                    <span>
+                                        {% if not task.completed %}
+                                            <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="{% url 'mark_as_completed' task.id %}" class="btn btn-sm btn-success">
+                                                <i class="bi bi-check2-circle"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">Aucune tâche.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Quadrant 2: Pas Urgent & Important -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-primary shadow" style="min-height: 250px;">
+                <div class="card-header bg-primary text-white">
+                    <strong>📝 Pas Urgent & Important (Planifier)</strong>
+                </div>
+                <div class="card-body">
+                    {% if not_urgent_important %}
+                        <ul class="list-group">
+                            {% for task in not_urgent_important %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>
+                                        {{ task.title }}
+                                        {% if task.completed %}
+                                            <span class="badge bg-success">✔ Terminé</span>
+                                        {% else %}
+                                            <span class="badge bg-primary">🕒 Planifié</span>
+                                        {% endif %}
+                                    </span>
+                                    <span>
+                                        {% if not task.completed %}
+                                            <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="{% url 'mark_as_completed' task.id %}" class="btn btn-sm btn-success">
+                                                <i class="bi bi-check2-circle"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">Aucune tâche.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Quadrant 3: Urgent & Pas Important -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-warning shadow" style="min-height: 250px;">
+                <div class="card-header bg-warning text-dark">
+                    <strong>⚡ Urgent & Pas Important (Déléguer)</strong>
+                </div>
+                <div class="card-body">
+                    {% if urgent_not_important %}
+                        <ul class="list-group">
+                            {% for task in urgent_not_important %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>
+                                        {{ task.title }}
+                                        {% if task.completed %}
+                                            <span class="badge bg-success">✔ Terminé</span>
+                                        {% else %}
+                                            <span class="badge bg-warning text-dark">⚡ Déléguer</span>
+                                        {% endif %}
+                                    </span>
+                                    <span>
+                                        {% if not task.completed %}
+                                            <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="{% url 'mark_as_completed' task.id %}" class="btn btn-sm btn-success">
+                                                <i class="bi bi-check2-circle"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">Aucune tâche.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Quadrant 4: Pas Urgent & Pas Important -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-secondary shadow" style="min-height: 250px;">
+                <div class="card-header bg-secondary text-white">
+                    <strong>🚀 Pas Urgent & Pas Important (Éliminer)</strong>
+                </div>
+                <div class="card-body">
+                    {% if not_urgent_not_important %}
+                        <ul class="list-group">
+                            {% for task in not_urgent_not_important %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>
+                                        {{ task.title }}
+                                        {% if task.completed %}
+                                            <span class="badge bg-success">✔ Terminé</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">🗑 Éliminer</span>
+                                        {% endif %}
+                                    </span>
+                                    <span>
+                                        {% if not task.completed %}
+                                            <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="{% url 'mark_as_completed' task.id %}" class="btn btn-sm btn-success">
+                                                <i class="bi bi-check2-circle"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">Aucune tâche.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'add_task' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Ajouter une tâche
+        </a>
+    </div>
+</div>
+
+<script>
+    setTimeout(function() {
+        let alert = document.querySelector(".alert");
+        if (alert) {
+            alert.style.opacity = "0";
+            setTimeout(() => alert.remove(), 500);
+        }
+    }, 5000); // Disparaît après 5 secondes
+</script>
+
+{% endblock %}

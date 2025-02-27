@@ -1,0 +1,158 @@
+{% extends "users/base.html" %}
+{% block title %}Accueil | To-Do List{% endblock title %}
+
+{% block content %}
+<!-- Section Héros -->
+
+<style>
+    /* Section Héros */
+    .hero {
+        background: linear-gradient(135deg, #3b82f6, #1e40af);
+        height: 60vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .h1 {
+        color: white;
+    }
+
+    /* Section Fonctionnalités */
+    .features {
+        background: #f4f4f4;
+        padding: 60px 0;
+    }
+
+    .feature-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        padding: 20px;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Section Contact */
+    .contact {
+        background: linear-gradient(135deg, #2652cc, #062374);
+        padding: 60px 0;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.8s ease-out;
+    }
+
+    .delay-1 {
+        animation-delay: 0.3s;
+    }
+
+    .delay-2 {
+        animation-delay: 0.6s;
+    }
+</style>
+
+<section class="hero text-center text-white d-flex align-items-center" style="height: 80vh;">
+    <div class="container my-5">
+        <div class="row align-items-center  g-4">
+            <!-- Texte à gauche -->
+            <div class="col-md-6 text-center text-md-center">
+                <h1 class=" fw-bold">Gérez vos tâches intelligemment</h1>
+                <p class="lead">Organisez vos priorités et gagnez du temps grâce à notre solution efficace et intuitive.
+                </p>
+                <a href="{% url 'task_list' %}" class="btn btn-primary btn-lg">Commencer</a>
+            </div>
+
+            <!-- Image à droite -->
+            <div class="col-md-6 text-center d-none d-md-block">
+                <img src="/media/homepage1.svg" alt="Gestion des tâches" class="img-fluid rounded"
+                    style="width: 450px; height: auto;">
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- Section Fonctionnalités -->
+<section class="features py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Pourquoi utiliser notre To-Do List ?</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card animate-slide-up text-center h-100">
+                    <div class="card-body d-flex flex-column">
+                        <i class="bi bi-check2-circle display-4 text-primary"></i>
+                        <h3 class="mt-3">Planification efficace</h3>
+                        <p class="text-muted">Créez, classez et suivez vos tâches avec un système intelligent basé sur
+                            l'urgence et l'importance.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card animate-slide-up delay-1 text-center h-100">
+                    <div class="card-body d-flex flex-column">
+                        <i class="bi bi-bell-fill display-4 text-warning"></i>
+                        <h3 class="mt-3">Rappels automatiques</h3>
+                        <p class="text-muted">Ne manquez jamais une tâche critique grâce aux notifications et aux
+                            rappels intégrés.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 ">
+                <div class="card feature-card animate-slide-up delay-2 text-center h-92">
+                    <div class="card-body d-flex flex-column">
+                        <i class="bi bi-bar-chart-line display-4 text-success"></i>
+                        <h3 class="mt-3">Analyse de performance</h3>
+                        <p class="text-muted">Visualisez vos progrès et améliorez votre gestion du temps avec des
+                            statistiques détaillées.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Contact -->
+<section class="contact text-center text-white py-5">
+    <div class="container">
+        <h2>Besoin d'aide ?</h2>
+        <p class="lead">Contactez-nous et optimisez votre gestion du temps dès aujourd’hui.</p>
+        <a href="#" class="btn btn-light btn-lg">Nous contacter</a>
+    </div>
+</section>
+
+{% endblock content %}

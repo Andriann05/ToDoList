@@ -1,0 +1,109 @@
+{% extends "users/base.html" %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100 px-3">
+    <div class="row w-100 justify-content-center align-items-center">
+        <!-- Formulaire centré et ajusté -->
+        <div class="col-12 col-sm-10 col-md-8 col-lg-5">
+            <div class="card shadow-lg border-0 rounded-4 p-4">
+                <div class="card-header text-center bg-primary text-white py-2 rounded-top">
+                    <h4 class="fw-bold mb-0">Se connecter</h4>
+                </div>
+
+                {% if form.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show my-2" role="alert">
+                        <div id="form_errors">
+                            {% for key, value in form.errors.items %}
+                                <strong>{{ value }}</strong>
+                            {% endfor %}
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="d-grid gap-2 mb-3">
+                            <a href="{% url 'social:begin' 'github' %}" class="btn btn-outline-dark btn-sm">
+                                <i class="uil uil-github"></i> Se connecter avec GitHub
+                            </a>
+                            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-outline-danger btn-sm">
+                                <i class="uil uil-google"></i> Se connecter avec Google
+                            </a>
+                        </div>
+
+                        <div class="text-center mb-2">
+                            <span class="text-muted">ou</span>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Nom d'utilisateur</label>
+                            {{ form.username }}
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Mot de passe</label>
+                            {{ form.password }}
+                        </div>
+
+                        <div class="form-check mb-2">
+                            {{ form.remember_me }}
+                            <label class="form-check-label"> Se souvenir de moi</label>
+                        </div>
+
+                        <div class="d-grid">
+                            <button name="login" class="btn btn-primary btn-sm" id="login">Se connecter</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-footer text-center bg-primary text-white py-2 rounded-bottom">
+                    <p class="mb-1">
+                        <a href="{% url 'register' %}" class="text-white fw-bold">Pas encore de compte? S'inscrire</a>
+                    </p>
+                    <p>
+                        <a href="{% url 'password_reset' %}" class="text-light"><i>Mot de passe oublié?</i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image masquée en mobile et ajustée sur écrans larges -->
+        <div class="col-md-6 d-none d-md-flex justify-content-center">
+            <img src="/media/tablet-login-animate.svg" alt="Login Image" class="img-fluid rounded-4 shadow login-image" style="height: 900px;">
+        </div>
+    </div>
+</div>
+
+<style>
+    .login-image {
+        max-height: 550px;
+        width: auto;
+    }
+
+    @media (max-width: 767px) {
+        .login-image {
+            display: none;
+        }
+    }
+</style>
+
+
+<script>
+    (function () {
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+
+        window.onload = function () {
+            setTimeout(function () {
+                window.history.forward();
+            }, 0);
+        };
+    })();
+</script>
+
+{% endblock content %}
